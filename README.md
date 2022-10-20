@@ -1,4 +1,4 @@
-##Add extensions to this repository-
+## Add extensions to this repository-
 Here are some ideas:
 - Change the color scheme of the app, e.g. the background/primary/secondary color.
 - Modify the theme at app/src/main/res/values/theme.xml
