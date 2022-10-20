@@ -1,3 +1,16 @@
+##Add extensions to this repository-
+Here are some ideas:
+- Change the color scheme of the app, e.g. the background/primary/secondary color.
+- Modify the theme at app/src/main/res/values/theme.xml
+- Replace the text describing the tip (“poor”, “good”, etc) with emojis.
+- Improve the user interface through styling and coloring, e.g. change the text color, font,
+  optimize the layout for different screens. See the styling screens FAQ.
+- Add the ability to split the bill across any number of people.
+  (Advanced) Show currency symbols, and allow the user to change their currency.
+- Store the currency in SharedPreferences
+- (Advanced) Add another screen to the app where you can see tips made in the past.
+- Use intents to add another screen to your app.
+
 # CONTRIBUTION GUIDE
 
 If you are new to open-source contribution and don't know how to get started, don't worry, this is a deatiled step by step guide to help you make your first contribution.
