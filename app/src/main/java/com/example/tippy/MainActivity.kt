@@ -12,8 +12,9 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 
-private const val TAG =  "MainActivity"
-private const val INITIAL_TIP_PERCENT=15
+private const val TAG = "MainActivity"
+private const val INITIAL_TIP_PERCENT = 15
+
 class MainActivity : AppCompatActivity() {
     private lateinit var BaseAmount: EditText
     private lateinit var seekBarTip: SeekBar
@@ -22,31 +23,33 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTotalAmount: TextView
     private lateinit var tvTipDescription: TextView
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        BaseAmount=findViewById(R.id.BaseAmount)
-        seekBarTip=findViewById(R.id.seekBarTip)
-        tvTipAmount=findViewById(R.id.tvTipAmount)
-        tvTipPercentLAbel=findViewById(R.id.tvTipPercentLAbel)
-        tvTotalAmount=findViewById(R.id.tvTotalAmount)
-        tvTipDescription=findViewById(R.id.tvTipDescription)
+        BaseAmount = findViewById(R.id.BaseAmount)
+        seekBarTip = findViewById(R.id.seekBarTip)
+        tvTipAmount = findViewById(R.id.tvTipAmount)
+        tvTipPercentLAbel = findViewById(R.id.tvTipPercentLAbel)
+        tvTotalAmount = findViewById(R.id.tvTotalAmount)
+        tvTipDescription = findViewById(R.id.tvTipDescription)
 
 
-        seekBarTip.progress= INITIAL_TIP_PERCENT
-        tvTipPercentLAbel.text="$INITIAL_TIP_PERCENT%"
+        seekBarTip.progress = INITIAL_TIP_PERCENT
+        tvTipPercentLAbel.text = "$INITIAL_TIP_PERCENT%"
         updateTipDescription(INITIAL_TIP_PERCENT)
 
-
-        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                Log.i(TAG,"onProgressChanged $progress")
-                tvTipPercentLAbel.text="$progress%"
+        seekBarTip.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar?,
+                progress: Int,
+                fromUser: Boolean
+            ) {
+                Log.i(TAG, "onProgressChanged $progress")
+                tvTipPercentLAbel.text = "$progress%"
                 computeTipAndTotal()
                 updateTipDescription(progress)
-100
+                100
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -54,13 +57,25 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
         })
-        BaseAmount.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        BaseAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                Log.i(TAG,"afterTextChanged $s")
+                Log.i(TAG, "afterTextChanged $s")
                 computeTipAndTotal()
             }
 
@@ -69,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateTipDescription(tipPercent: Int) {
-        val tipDescription=when(tipPercent) {
+        val tipDescription = when (tipPercent) {
             in 0..9 -> "Poor"
             in 10..14 -> "Acceptable"
             in 15..19 -> "Good"
@@ -77,34 +92,31 @@ class MainActivity : AppCompatActivity() {
             else -> "Amazing"
         }
 
-            tvTipDescription.text=tipDescription
+        tvTipDescription.text = tipDescription
         //update the color based on the tipPercent
         val color = ArgbEvaluator().evaluate(
-            tipPercent.toFloat()/seekBarTip.max,
-            ContextCompat.getColor(this,R.color.color_worst_tip),
-            ContextCompat.getColor(this,R.color.color_best_tip)
-            )as Int
+            tipPercent.toFloat() / seekBarTip.max,
+            ContextCompat.getColor(this, R.color.color_worst_tip),
+            ContextCompat.getColor(this, R.color.color_best_tip)
+        ) as Int
         tvTipDescription.setTextColor(color)
-        }
-
-
+    }
 
 
     private fun computeTipAndTotal() {
-        if(BaseAmount.text.isEmpty())
-        {
-            tvTipAmount.text=""
-            tvTotalAmount.text=""
+        if (BaseAmount.text.isEmpty()) {
+            tvTipAmount.text = ""
+            tvTotalAmount.text = ""
             return
         }
         //get the value of base and tip
-        val baseamount=BaseAmount.text.toString().toDouble();
-        val tipPercent=seekBarTip.progress;
+        val baseamount = BaseAmount.text.toString().toDouble();
+        val tipPercent = seekBarTip.progress;
         //compute the tip and total
-        val tipamount=baseamount * tipPercent/100
-        val totalamount=tipamount+baseamount
+        val tipamount = baseamount * tipPercent / 100
+        val totalamount = tipamount + baseamount
         //updating the UI
-        tvTipAmount.text="%.2f".format(tipamount)
-        tvTotalAmount.text="%.2f".format(totalamount)
+        tvTipAmount.text = "%.2f".format(tipamount)
+        tvTotalAmount.text = "%.2f".format(totalamount)
     }
 }
